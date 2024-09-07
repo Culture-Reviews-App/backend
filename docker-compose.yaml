@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # MongoDB service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=culture-reviews
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - mynetwork
+
+  # Redis service
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mynetwork
+
+  # Go application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_app
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - mynetwork
+
+volumes:
+  mongo_data:
+  redis_data:
+
+networks:
+  mynetwork:
