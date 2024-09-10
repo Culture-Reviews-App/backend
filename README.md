@@ -12,6 +12,7 @@ Backend for the culture reviews app.
 - `use culture-reviews` to select the related db on mongosh.
 - `db.auth('mongoadmin', 'secret')` to authenticate on mongosh.
 - `db.users.find()` to see all users.
+- `sudo docker volume rm backend_mongo_data` to remove volume and re init mongodb.
 - `sudo docker exec -it redis redis-cli` to connect to redis.
 
 ### tools used to create project structure

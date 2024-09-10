@@ -64,6 +64,7 @@ func UserSignUp(c *fiber.Ctx) error {
 	user.ID = uuid.New()
 	user.CreatedAt = time.Now()
 	user.Email = signUp.Email
+	user.Username = signUp.Username
 	user.PasswordHash = utils.GeneratePassword(signUp.Password)
 	user.UserStatus = 1 // 0 == blocked, 1 == active
 
@@ -128,13 +129,13 @@ func UserSignIn(c *fiber.Ctx) error {
 		})
 	}
 
-	// Get user by email.
-	foundedUser, err := db.GetUserByEmail(signIn.Email)
+	// Get user by username.
+	foundedUser, err := db.GetUserByUsername(signIn.Username)
 	if err != nil {
 		// Return, if user not found.
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"error": true,
-			"msg":   "user with the given email is not found",
+			"msg":   "user with the given username is not found",
 		})
 	}
 

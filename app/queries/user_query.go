@@ -69,3 +69,22 @@ func (q *UserQueries) CreateUser(user *models.User) error {
 	// Return nil if insertion is successful.
 	return nil
 }
+
+// GetUserByEmail retrieves a user by their email.
+func (q *UserQueries) GetUserByUsername(username string) (*models.User, error) {
+	// Define a variable to hold the result.
+	var user models.User
+
+	// Define a filter to find the user by email.
+	filter := bson.M{"username": username}
+
+	// Execute the query.
+	err := q.Collection.FindOne(context.TODO(), filter).Decode(&user)
+	if err != nil {
+		// Return nil and error if user is not found or other errors occur.
+		return nil, err
+	}
+
+	// Return the user and nil as error.
+	return &user, nil
+}

@@ -10,3 +10,6 @@ db.createUser(
         ]
     }
 );
+db.createCollection("users");
+db.getCollection("users").createIndex( { "username": 1 }, { unique: true } );
+db.getCollection("users").createIndex( { "email": 1 }, { unique: true } );

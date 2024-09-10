@@ -82,7 +82,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.SignUp"
+                            "$ref": "#/definitions/models.SignIn"
                         }
                     }
                 ],
@@ -168,11 +168,29 @@ const docTemplate = `{
                 }
             }
         },
+        "models.SignIn": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 15
+                }
+            }
+        },
         "models.SignUp": {
             "type": "object",
             "required": [
                 "email",
-                "password"
+                "password",
+                "username"
             ],
             "properties": {
                 "email": {
@@ -182,6 +200,10 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "maxLength": 255
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 15
                 }
             }
         },
@@ -191,7 +213,8 @@ const docTemplate = `{
                 "email",
                 "id",
                 "password_hash",
-                "user_status"
+                "user_status",
+                "username"
             ],
             "properties": {
                 "created_at": {
@@ -213,6 +236,10 @@ const docTemplate = `{
                 },
                 "user_status": {
                     "type": "integer"
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 15
                 }
             }
         }

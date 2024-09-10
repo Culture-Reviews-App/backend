@@ -5,6 +5,18 @@ definitions:
       refresh_token:
         type: string
     type: object
+  models.SignIn:
+    properties:
+      password:
+        maxLength: 255
+        type: string
+      username:
+        maxLength: 15
+        type: string
+    required:
+    - password
+    - username
+    type: object
   models.SignUp:
     properties:
       email:
@@ -13,9 +25,13 @@ definitions:
       password:
         maxLength: 255
         type: string
+      username:
+        maxLength: 15
+        type: string
     required:
     - email
     - password
+    - username
     type: object
   models.User:
     properties:
@@ -33,11 +49,15 @@ definitions:
         type: string
       user_status:
         type: integer
+      username:
+        maxLength: 15
+        type: string
     required:
     - email
     - id
     - password_hash
     - user_status
+    - username
     type: object
 info:
   contact:
@@ -86,7 +106,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.SignUp'
+          $ref: '#/definitions/models.SignIn'
       produces:
       - application/json
       responses:
