@@ -5,6 +5,18 @@ definitions:
       refresh_token:
         type: string
     type: object
+  models.ReviewCreate:
+    properties:
+      content:
+        maxLength: 255
+        type: string
+      title:
+        maxLength: 15
+        type: string
+    required:
+    - content
+    - title
+    type: object
   models.SignIn:
     properties:
       password:
@@ -71,6 +83,30 @@ info:
   title: API
   version: "1.0"
 paths:
+  /v1/review/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a review related to given token.
+      parameters:
+      - description: Review Data
+        in: body
+        name: review
+        required: true
+        schema:
+          $ref: '#/definitions/models.ReviewCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: create review for the user.
+      tags:
+      - Review
   /v1/token/renew:
     post:
       consumes:

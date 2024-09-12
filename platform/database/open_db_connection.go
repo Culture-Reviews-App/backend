@@ -13,7 +13,8 @@ import (
 
 // Queries struct for collect all app queries.
 type Queries struct {
-	*queries.UserQueries // load queries from User model
+	*queries.UserQueries   // load queries from User model
+	*queries.ReviewQueries // load queries from Review model
 }
 
 // OpenDBConnection function for opening the MongoDB connection.
@@ -40,6 +41,10 @@ func OpenDBConnection(collectionName string) (*Queries, error) {
 	case "users":
 		return &Queries{
 			UserQueries: &queries.UserQueries{Collection: collection},
+		}, nil
+	case "reviews":
+		return &Queries{
+			ReviewQueries: &queries.ReviewQueries{Collection: collection},
 		}, nil
 	default:
 		// Handle the case where the collection name does not match any expected names.
