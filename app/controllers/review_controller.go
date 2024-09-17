@@ -73,6 +73,7 @@ func CreateReview(c *fiber.Ctx) error {
 	// Set review object.
 	review.ID = uuid.New()
 	review.CreatedAt = time.Now()
+	review.UpdatedAt = review.CreatedAt
 	review.UserID = claims.UserID
 	review.Title = reviewCreate.Title
 	review.Content = reviewCreate.Content

@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 // ReviewQueries struct for queries related to the Review model.
@@ -41,8 +42,11 @@ func (q *ReviewQueries) ListReviews(userID uuid.UUID) ([]models.ReviewList, erro
 	// Define the filter to get reviews for the given userID
 	filter := bson.M{"userid": userID}
 
+	// Define the sort option to sort by updatedat in descending order (-1)
+	opts := options.Find().SetSort(bson.D{{Key: "updatedat", Value: -1}})
+
 	// Query the collection for reviews
-	cursor, err := q.Collection.Find(ctx, filter)
+	cursor, err := q.Collection.Find(ctx, filter, opts)
 	if err != nil {
 		// Return error if the query fails.
 		return nil, err
