@@ -103,3 +103,50 @@ func CreateReview(c *fiber.Ctx) error {
 		"review": review,
 	})
 }
+
+// ListReviews method to list reviews for signed in user.
+// @Description List reviews related to given token.
+// @Summary list all reviews for the user.
+// @Tags Review
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.ReviewList "List of reviews"
+// @Security ApiKeyAuth
+// @Router /v1/review/list [get]
+func ListReviews(c *fiber.Ctx) error {
+	// Get claims from JWT.
+	claims, err := utils.ExtractTokenMetadata(c)
+	if err != nil {
+		// Return status 500 and JWT parse error.
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   err.Error(),
+		})
+	}
+
+	// Create database connection.
+	db, err := database.OpenDBConnection("reviews")
+	if err != nil {
+		// Return status 500 and database connection error.
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   err.Error(),
+		})
+	}
+
+	reviews, err := db.ListReviews(claims.UserID)
+	if err != nil {
+		// Return status 500 and create process error.
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   err.Error(),
+		})
+	}
+
+	// Return reviews
+	return c.JSON(fiber.Map{
+		"error":   false,
+		"msg":     nil,
+		"reviews": reviews,
+	})
+}

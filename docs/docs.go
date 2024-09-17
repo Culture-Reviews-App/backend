@@ -62,6 +62,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/review/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "List reviews related to given token.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Review"
+                ],
+                "summary": "list all reviews for the user.",
+                "responses": {
+                    "200": {
+                        "description": "List of reviews",
+                        "schema": {
+                            "$ref": "#/definitions/models.ReviewList"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/token/renew": {
             "post": {
                 "security": [
@@ -221,6 +249,26 @@ const docTemplate = `{
                 "title": {
                     "type": "string",
                     "maxLength": 15
+                }
+            }
+        },
+        "models.ReviewList": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "likes": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },

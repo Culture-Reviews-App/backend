@@ -12,6 +12,15 @@ type ReviewCreate struct {
 	Content string `db:"content" json:"content" validate:"required,lte=255"`
 }
 
+// ReviewList struct to describe how to list a Review.
+type ReviewList struct {
+	ID        uuid.UUID `db:"id" json:"id"`
+	Title     string    `db:"title" json:"title"`
+	Content   string    `db:"content" json:"content"`
+	Likes     int       `db:"likes" json:"likes"`
+	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
+}
+
 // Review struct to describe Review object.
 type Review struct {
 	ID        uuid.UUID `db:"id" json:"id" validate:"required,uuid"`

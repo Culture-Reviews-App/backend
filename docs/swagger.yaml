@@ -17,6 +17,19 @@ definitions:
     - content
     - title
     type: object
+  models.ReviewList:
+    properties:
+      content:
+        type: string
+      id:
+        type: string
+      likes:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
   models.SignIn:
     properties:
       password:
@@ -105,6 +118,23 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: create review for the user.
+      tags:
+      - Review
+  /v1/review/list:
+    get:
+      consumes:
+      - application/json
+      description: List reviews related to given token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of reviews
+          schema:
+            $ref: '#/definitions/models.ReviewList'
+      security:
+      - ApiKeyAuth: []
+      summary: list all reviews for the user.
       tags:
       - Review
   /v1/token/renew:
