@@ -33,6 +33,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    # image: beratdalsuna/backend-app:latest
     container_name: go_app
     ports:
       - "5000:5000"

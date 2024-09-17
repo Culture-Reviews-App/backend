@@ -20,3 +20,10 @@ Backend for the culture reviews app.
 - https://github.com/create-go-app/cli
 - https://github.com/gofiber/swagger
 
+### push to docker hub
+- find container ID with `sudo docker container ls`
+- commit with new name `sudo docker container commit <id> beratdalsuna/backend-app:latest`
+- push to hub `sudo docker image push beratdalsuna/backend-app:latest`
+
+### pull from docker
+- latest version can be pulled from registry `sudo docker pull beratdalsuna/backend-app:latest`
